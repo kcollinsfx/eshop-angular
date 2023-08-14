@@ -1,13 +1,41 @@
-<p>Products</p>
-<div class="row">
-  <div *ngFor="let item of storeService.items;" class="col-sm-3">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="cart-title">
-          <a routerLink='/item/{{item.id}}'>{{item.name}}</a>
-        </h5>
-        <p class="card-substitute mb-2 text-muted">${{item.price}}</p>
+<div class="container-fluid">
+  <p>Products</p>
+
+  Page Size:
+  <select [(ngModel)]="storeService.pageSize" (change)="onPageSizeChange()" id="pageSize">
+    <option value="3">3</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="50">50</option>
+  </select>
+  <br>
+  <div class="row">
+  <div class="col-sm" *ngFor="let item of storeService.items;">
+    <div class="card-img-top" style="width: 12rem">
+      <div>
+        <img  src="/assets/angular.svg" width="200" height="120" />
+      </div>
+      <div class="card text-center">
+        <div class="card-body">
+          <h4 class="card-title">
+            <a routerLink="/item/{{item.id}}">
+              {{item.name}}
+            </a>
+          </h4>
+          <p class="card-subtitle mb-2 text-muted">${{item.price}}</p>
+        </div>
       </div>
     </div>
+    <br />
   </div>
+  </div>
+  <br />
+  <button (click)="openFilter()">Filter</button>
+  <ngb-pagination
+  [(page)]="storeService.page"
+  [pageSize] = "storeService.pageSize"
+  [collectionSize] = "storeService.count"
+  (pageChange) = "onPageChange($event)">
+  </ngb-pagination>
+
 </div>
